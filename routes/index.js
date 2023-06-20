@@ -9,7 +9,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/create-checkout-session", async (req, res) => {
-  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  const baseUrl = `https://${req.get("host")}`;
   console.log(baseUrl);
   const session = await stripe.checkout.sessions.create({
     line_items: [
