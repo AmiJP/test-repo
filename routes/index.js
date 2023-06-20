@@ -9,6 +9,8 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/create-checkout-session", async (req, res) => {
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  console.log(baseUrl);
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -18,18 +20,19 @@ router.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "subscription",
-    success_url: `http://localhost:3000?success=true`,
-    cancel_url: `http://localhost:3000?canceled=true`,
+    success_url: `${baseUrl}?success=true`,
+    cancel_url: `${baseUrl}?canceled=true`,
   });
 
   res.redirect(303, session.url);
 });
 
 router.post("/create-customer-portal-session", async (req, res) => {
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
   // Authenticate your user.
   const session = await stripe.billingPortal.sessions.create({
     customer: "cus_O6jnegVEpcvEJL",
-    return_url: "http://localhost:3000",
+    return_url: baseUrl,
   });
 
   res.redirect(session.url);
