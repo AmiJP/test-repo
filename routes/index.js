@@ -28,7 +28,7 @@ router.post("/create-checkout-session", async (req, res) => {
 });
 
 router.post("/create-customer-portal-session", async (req, res) => {
-  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  const baseUrl = `https://${req.get("host")}`;
   // Authenticate your user.
   const session = await stripe.billingPortal.sessions.create({
     customer: "cus_O6jnegVEpcvEJL",
